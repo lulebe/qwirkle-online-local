@@ -1,0 +1,242 @@
+button, .btn {
+  border: 2px solid #999;
+  border-radius: 4px;
+  padding: 12px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.05s;
+  outline: none;
+}
+button:hover, .btn:hover {
+  transform: scale(1.03);
+}
+button:active:hover, .btn:active:hover {
+  transform: scale(0.98);
+}
+button.primary, .btn.primary {
+  background: #6622cc;
+  color: white;
+  border: 2px solid #6622cc;
+}
+button.warning, .btn.warning {
+  background: #ff9966;
+  color: white;
+  border: 2px solid #ff9966;
+}
+button:disabled, .btn:disabled {
+  background: #aaa;
+  cursor: default;
+  transform: none;
+}
+
+@keyframes setup-player-color-scale {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(0.9);
+  }
+}
+#setup-player-list {
+  list-style: none;
+  padding: 0;
+}
+#setup-player-list li {
+  padding: 12px;
+  padding-left: 42px;
+  position: relative;
+}
+#setup-player-list li:nth-child(even) {
+  background: #ddd;
+}
+#setup-player-list li:not(:first-child) {
+  border-top: 1px solid #aaa;
+}
+#setup-player-list li .color-marker {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  bottom: 12px;
+  width: 18px;
+  border-radius: 17px;
+  animation: setup-player-color-scale 2s infinite;
+}
+#setup-player-list li .color-marker.connected {
+  background: green;
+}
+#setup-player-list li .color-marker.disconnected {
+  background: red;
+}
+
+.game-layout {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 64px 35% auto 64px;
+  grid-template-columns: 70% auto;
+}
+
+.game-header {
+  grid-row: 1/span 1;
+  grid-column: 1/span 2;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  background-color: #6622cc;
+  color: white;
+}
+.game-header h1 {
+  text-align: center;
+  margin-top: 13px;
+}
+
+#game-table {
+  grid-row: 2/span 3;
+  grid-column: 1/span 1;
+}
+
+.game-scoreboard {
+  grid-row: 2/span 1;
+  grid-column: 2/span 1;
+  padding: 0 16px;
+  border-left: 2px solid #666;
+}
+
+.game-misc {
+  grid-row: 3/span 1;
+  grid-column: 2/span 1;
+  border-left: 2px solid #666;
+  padding: 24px;
+}
+
+.game-main-actions {
+  grid-row: 4/span 1;
+  grid-column: 2/span 1;
+  border-left: 2px solid #666;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.game-main-actions button {
+  flex-grow: 1;
+}
+.game-main-actions button:not(:last-child) {
+  margin-right: 24px;
+}
+
+#scoreboard {
+  list-style: none;
+  padding: 0;
+}
+#scoreboard li {
+  padding: 12px;
+  position: relative;
+  padding-left: 42px;
+}
+#scoreboard li.turn {
+  font-weight: bold;
+}
+#scoreboard li:nth-child(even) {
+  background: #ddd;
+}
+#scoreboard li:not(:first-child) {
+  border-top: 1px solid #aaa;
+}
+#scoreboard .color-marker {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  bottom: 12px;
+  width: 18px;
+  border-radius: 17px;
+}
+#scoreboard .color-marker.connected {
+  background: green;
+}
+#scoreboard .color-marker.disconnected {
+  background: red;
+}
+
+#game-canvas {
+  margin: 4px 0 0 4px;
+}
+
+#warning-box {
+  background: #ff9966;
+  padding: 16px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+}
+#warning-box.visible {
+  opacity: 1;
+}
+
+.remote-piece {
+  margin: 12px 0;
+  height: 64px;
+}
+.remote-piece canvas {
+  display: block;
+  margin: 0 auto;
+}
+.remote-piece.selected {
+  background: #ccc;
+}
+.remote-piece:hover {
+  background: #e3e3e3;
+}
+
+.game-header-remote {
+  height: 64px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  background-color: #6622cc;
+  color: white;
+  padding-top: 20px;
+}
+.game-header-remote h1 {
+  text-align: center;
+  margin: 0;
+  font-size: 20px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: sans-serif;
+  font-size: 16px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #eee;
+}
+
+.centered {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 600px;
+  padding: 16px;
+}
+
+.center {
+  text-align: center;
+}
+
+fieldset {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+
+/*# sourceMappingURL=style.css.map*/

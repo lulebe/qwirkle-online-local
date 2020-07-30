@@ -1,0 +1,39 @@
+{% extends "layout.twig" %}
+
+{% block title %}Remote{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+  const gameName = "{{ gameName }}"
+  const userName = "{{ userName }}"
+</script>
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="/static/js/remote/canvas.js"></script>
+<script type="text/javascript" src="/static/js/remote/game.js"></script>
+{% endblock %}
+
+{% block main %}
+<div class="game-header-remote">
+  <h1>{{ gameName }}: {{ userName }}</h1>
+</div>
+<div class="centered">
+  <div id="piece-0" class="remote-piece">
+    <canvas width="64" height="64" id="piece-0-canvas"></canvas>
+  </div>
+  <div id="piece-1" class="remote-piece">
+    <canvas width="64" height="64" id="piece-1-canvas"></canvas>
+  </div>
+  <div id="piece-2" class="remote-piece">
+    <canvas width="64" height="64" id="piece-2-canvas"></canvas>
+  </div>
+  <div id="piece-3" class="remote-piece">
+    <canvas width="64" height="64" id="piece-3-canvas"></canvas>
+  </div>
+  <div id="piece-4" class="remote-piece">
+    <canvas width="64" height="64" id="piece-4-canvas"></canvas>
+  </div>
+  <div id="piece-5" class="remote-piece">
+    <canvas width="64" height="64" id="piece-5-canvas"></canvas>
+  </div>
+</div>
+{% endblock %}

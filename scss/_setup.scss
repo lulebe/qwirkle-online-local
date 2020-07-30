@@ -1,0 +1,36 @@
+@keyframes setup-player-color-scale {
+  0%   {transform: scale(0.9);}
+  50%  {transform: scale(1.1);}
+  100% {transform: scale(0.9);}
+}
+
+#setup-player-list {
+  list-style: none;
+  padding: 0;
+  li {
+    padding: 12px;
+    padding-left: 42px;
+    position: relative;
+    &:nth-child(even) {
+      background: #ddd;
+    }
+    &:not(:first-child) {
+      border-top: 1px solid #aaa;
+    }
+    .color-marker {
+      position: absolute;
+      left: 12px;
+      top: 12px;
+      bottom: 12px;
+      width: 18px;
+      border-radius: 17px;
+      animation: setup-player-color-scale 2s infinite;
+      &.connected {
+        background: green;
+      }
+      &.disconnected {
+        background: red;
+      }
+    }
+  }
+}

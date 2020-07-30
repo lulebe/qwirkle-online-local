@@ -1,0 +1,36 @@
+{% extends "layout.twig" %}
+
+{% block title %}Start{% endblock %}
+
+{% block main %}
+<div class="centered">
+  <h1 class="center">Qwirkle</h1>
+  <fieldset>
+    <legend>Create game</legend>
+    <form method="POST" action="/main/create_game">
+      <p class="center">
+        Create a new game on this device and use other devices to join in: <br><br>
+        <button type="submit" class="big primary center">Create a new game!</button>
+      </p>
+    </form>
+  </fieldset>
+  <fieldset>
+    <legend>Join game</legend>
+    <form method="POST" action="/remote/game">
+      <p class="center">
+        Join a game on this device: <br><br>
+
+        <label>Game Name: <br>
+          <input type="text" name="game" />
+        </label><br><br>
+        <label>Your Name: <br>
+          <input type="text" name="username" />
+        </label>
+        
+        <br><br>
+        <button type="submit" class="big primary center">Join game!</button>
+      </p>
+    </form>
+  </fieldset>
+</div>
+{% endblock %}

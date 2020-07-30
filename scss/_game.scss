@@ -1,0 +1,104 @@
+.game-layout {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 64px 35% auto 64px;
+  grid-template-columns: 70% auto;
+}
+
+.game-header {
+  grid-row: 1 / span 1;
+  grid-column: 1 / span 2;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  z-index: 1;
+  background-color: $primary-color;
+  color: white;
+  h1 {
+    text-align: center;
+    margin-top: 13px;
+  }
+}
+
+#game-table {
+  grid-row: 2 / span 3;
+  grid-column: 1 / span 1;
+}
+
+.game-scoreboard {
+  grid-row: 2 / span 1;
+  grid-column: 2 / span 1;
+  padding: 0 16px;
+  border-left: 2px solid #666;
+}
+
+.game-misc {
+  grid-row: 3 / span 1;
+  grid-column: 2 / span 1;
+  border-left: 2px solid #666;
+  padding: 24px;
+}
+
+.game-main-actions {
+  grid-row: 4 / span 1;
+  grid-column: 2 / span 1;
+  border-left: 2px solid #666;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  button {
+    flex-grow: 1;
+    &:not(:last-child) {
+      margin-right: 24px;
+    }
+  }
+}
+
+#scoreboard {
+  list-style: none;
+  padding: 0;
+  li {
+    padding: 12px;
+    position: relative;
+    padding-left: 42px;
+    &.turn {
+      font-weight: bold;
+    }
+    &:nth-child(even) {
+      background: #ddd;
+    }
+    &:not(:first-child) {
+      border-top: 1px solid #aaa;
+    }
+  }
+  .color-marker {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    bottom: 12px;
+    width: 18px;
+    border-radius: 17px;
+    &.connected {
+      background: green;
+    }
+    &.disconnected {
+      background: red;
+    }
+  }
+}
+
+#game-canvas {
+  margin: 4px 0 0 4px;
+}
+
+#warning-box {
+  background: $warning-color;
+  padding: 16px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+  &.visible {
+    opacity: 1;
+  }
+}
