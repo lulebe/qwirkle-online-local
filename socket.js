@@ -71,7 +71,7 @@ module.exports =  {
         const game = games.getGame(data.gameName)
         game.host.emit('screen-event', data)
       })
-      client.on('warn-screens', data => {
+      client.on('screen-warning', data => {
         const game = client.hostsGame
         if (game)
           game.screens.forEach(screen => screen.emit('warning', data))
