@@ -1,8 +1,13 @@
 const games = require('./games')
 
 function updatePlayers (game) {
-  if (game && game.host)
+  if (!game)
+    return
+  if (game.host)
     game.host.emit('players', game.players.map(player => ({name: player.name, connected: player.client != null})))
+  game.screens.forEach(screen => {
+    screen.emit('players', game.players.map(player => ({name: player.name, connected: player.client != null})))
+  })  
 }
 
 module.exports =  {
@@ -15,6 +20,15 @@ module.exports =  {
           game.hostDisconnected = false
           client.hostsGame = game
           updatePlayers(game)
+        }
+      })
+      client.on('screen-name', gameName => {
+        const game = games.getGame(gameName)
+        if (game) {
+          game.screens.push(client)
+          client.screensGame = game
+          client.screenId = game.nextScreenId
+          game.nextScreenId++
         }
       })
       client.on('remote-data', data => {
@@ -49,6 +63,19 @@ module.exports =  {
         game.players.forEach(p => p.client.playsGame = null)
         games.removeGame(game)
       })
+      client.on('screen-update', data => {
+        const game = games.getGame(data.gameName)
+        game.screens.forEach(screen => screen.emit('game-data', data.data))
+      })
+      client.on('screen-event', data => {
+        const game = games.getGame(data.gameName)
+        game.host.emit('screen-event', data)
+      })
+      client.on('warn-screens', data => {
+        const game = client.hostsGame
+        if (game)
+          game.screens.forEach(screen => screen.emit('warning', data))
+      })
       client.on('disconnect', () => {
         if (client.playsGame) {
           client.playsGame.players.find(player => player.client == client).client = null
@@ -59,6 +86,11 @@ module.exports =  {
           client.hostsGame.host = null
           client.hostsGame.hostDisconnected = (new Date()).getTime()
           client.hostsGame = null
+        }
+        if (client.screensGame) {
+          const index = client.screensGame.screens.indexOf(client)
+          if (index > -1)
+          client.screensGame.screens.splice(index, 1)
         }
       })
     })

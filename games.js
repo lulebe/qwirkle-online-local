@@ -8,7 +8,7 @@ const games = []
 setInterval(removeNullHostGames, 60000)
 
 module.exports = {
-  makeGame, getGame, removeGame
+  makeGame, getGame, removeGame, getScreenById
 }
 
 function getGame (name) {
@@ -17,12 +17,16 @@ function getGame (name) {
   return game
 }
 
+function getScreenById (game, id) {
+  return game.screens.find(screen => screen.screenId == id)
+}
+
 function makeGame () {
   let gameName = nanoid()
   while (getGame(gameName) != null) {
     gameName = nanoid()
   }
-  const game = {name: gameName, players: [], host: null, hostDisconnected: (new Date()).getTime()}
+  const game = {name: gameName, players: [], host: null, screens: [], nextScreenNum: 1, hostDisconnected: (new Date()).getTime()}
   games.push(game)
   return game
 }

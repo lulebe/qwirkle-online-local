@@ -1,0 +1,43 @@
+{% extends "layout.twig" %}
+
+{% block title %}Game{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+  const gameName = "{{ gameName }}"
+</script>
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="/static/js/screen/canvas.js"></script>
+<script type="text/javascript" src="/static/js/screen/game.js"></script>
+{% endblock %}
+
+{% block main %}
+<div class="game-layout">
+  <div class="game-header">
+    <h1>playing Game {{ gameName }}: <span id="turn-player"></span>'s turn</h1>
+  </div>
+  <div id="game-table">
+    <canvas id="game-canvas"></canvas>
+  </div>
+  <div class="game-scoreboard">
+    <h2>Scoreboard</h2>
+    <ul id="scoreboard"></ul>
+  </div>
+  <div class="game-misc">
+    Zoom: 
+    <button id="zoom-in">+</button>
+    <button id="zoom-out">-</button>
+    <br><br><br>
+    Pieces left in Box: <span id="box-size"></span>
+    <br><br><br>
+    Pieces selected: <span id="selection-size"></span>
+    <br><br><br>
+    <div id="warning-box">This is a test warning.</div>
+  </div>
+  <div class="game-main-actions">
+    <button id="main-action-reset">reset</button>
+    <button id="main-action-swap" class="warning">swap</button>
+    <button id="main-action-finish" class="primary">finish</button>
+  </div>
+</div>
+{% endblock %}

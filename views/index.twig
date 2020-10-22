@@ -15,7 +15,7 @@
     </form>
   </fieldset>
   <fieldset>
-    <legend>Join game</legend>
+    <legend>Join game as remote</legend>
     <form method="POST" action="/remote/game">
       <p class="center">
         Join a game on this device: <br><br>
@@ -25,6 +25,21 @@
         </label><br><br>
         <label>Your Name: <br>
           <input type="text" name="username" />
+        </label>
+        
+        <br><br>
+        <button type="submit" class="big primary center">Join game!</button>
+      </p>
+    </form>
+  </fieldset>
+  <fieldset>
+    <legend>Join game as main screen</legend>
+    <form method="POST" action="/screen/game">
+      <p class="center">
+        Join a game on this device: <br><br>
+
+        <label>Game Name: <br>
+          <input type="text" name="game" />
         </label>
         
         <br><br>

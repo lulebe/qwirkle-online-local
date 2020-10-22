@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
 
 app.use('/remote', require('./routes_remote.js'))
 app.use('/main', require('./routes_main.js'))
+app.use('/screen', require('./routes_screen.js'))
 
 app.use('/static', express.static('./static'))
 
