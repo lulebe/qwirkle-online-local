@@ -19,13 +19,14 @@ let scale = 1.0
 
 window.addEventListener('resize', resizeCanvas)
 
-function resizeCanvas () {
+function resizeCanvas (isInit) {
   document.getElementById("game-canvas").width = document.getElementById("game-table").clientWidth -10
   document.getElementById("game-canvas").height = document.getElementById("game-table").clientHeight -10
-  drawGame()
+  if (!isInit)
+    drawGame()
 }
 function initCanvas () {
-  resizeCanvas()
+  resizeCanvas(true)
 }
 
 function drawGame () {

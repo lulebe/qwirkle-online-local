@@ -19,6 +19,34 @@ socket.on('players', function(data) {
   updateScoreboard()
   updateDeckdata()
 })
+const SE_CLICKED_FIELD = 1
+const SE_RESET_TURN = 2
+const SE_SWAP_PIECES = 3
+const SE_MAKE_TURN = 4
+socket.on('screen-event', data => {
+  switch (data.event) {
+    case SE_CLICKED_FIELD:
+      clickedField(data.x, data.y)
+    break;
+    case SE_RESET_TURN:
+      resetTurn()
+    break;
+    case SE_SWAP_PIECES:
+      swapPieces()
+    break;
+    case SE_MAKE_TURN:
+      makeTurn()
+    break;
+  }
+})
+
+function updateScreens () {
+  socket.emit('screen-update', {gameName: gameName, data: game})
+}
+
+function warnScreens (warningNum) {
+  socket.emit('screen-warning', {gameName: gameName, warningNum})
+}
 
 let nextRow = 0
 let firstTurn = true
@@ -30,6 +58,7 @@ fillDecks()
 setStartingPlayer()
 updateScoreboard()
 initCanvas()
+updateScreens()
 
 //"colorShape" = "XX"
 //colors: 0=red, 1=green, 2=yellow, 3=blue, 4=pink, 5=rose
@@ -68,11 +97,12 @@ function fillDecks () {
     boxEmpty()
   displayBoxSize()
   updateDeckdata()
+  updateScreens()
 }
 
 function boxEmpty () {
   gameEnding = true
-  displayWarning("The box is empty. Every player until the starting player has one last turn.")
+  displayWarning(WARN_BOX_EMPTY)
 }
 
 function updateDeckdata () {
@@ -98,7 +128,7 @@ function setStartingPlayer () {
 function clickedField (x, y) {
   const selectedPieces = game.players[game.turn].deck.filter(piece => piece.selected)
   if (selectedPieces.length !== 1) {
-    displayWarning("Please select exactly 1 piece.")
+    displayWarning(WARN_SELECT_1)
     return
   }
   const selectedPiece = selectedPieces[0]
@@ -109,6 +139,7 @@ function clickedField (x, y) {
     game.players[game.turn].deck.splice(game.players[game.turn].deck.indexOf(selectedPiece), 1)
     drawGame()
     updateDeckdata()
+    updateScreens()
   }
 }
 
@@ -187,7 +218,7 @@ function makeTurn () {
   })
   if ( newPiecePositions.length > 0 && (hasInvalidPieces || !piecesShareRow(newPiecePositions))) {
     resetTurn()
-    displayWarning("Invalid turn has been reset. Please try again.")
+    displayWarning(WARN_INVALID_TURN)
   } else {
     addScores(newPiecePositions)
     newPiecePositions.forEach(pos => {game.table[pos.x][pos.y].new = false})
@@ -196,6 +227,7 @@ function makeTurn () {
     fillDecks()
     toNextTurn()
     updateScoreboard()
+    updateScreens()
   }
 }
 
@@ -329,18 +361,25 @@ function displayBoxSize () {
   document.getElementById("box-size").innerHTML = game.box.length
 }
 
+const WARN_NOTHING = 0
+const WARN_BOX_EMPTY = 1
+const WARN_SELECT_1 = 2
+const WARN_INVALID_TURN = 3
+const warnings = ["", "The box is empty. Every player until the starting player has one last turn.", "Please select exactly 1 piece.", "Invalid turn has been reset. Please try again."]
 let warningTimeout = null
-function displayWarning (text) {
+function displayWarning (warningNum) {
   warningTimeout && clearTimeout(warningTimeout)
-  document.getElementById("warning-box").innerHTML = text
+  document.getElementById("warning-box").innerHTML = warnings[warningNum]
   document.getElementById("warning-box").classList.add("visible")
   warningTimeout = setTimeout(() => {document.getElementById("warning-box").classList.remove("visible")}, 6000)
+  warnScreens(warningNum)
 }
 
 function gameEnd () {
   const winner = [...game.players].sort((a, b) => a.score - b.score).pop()
   displayWarning(winner.name + " wins the game!")
   socket.emit('game-end', {gameName})
+  updateScreens()
 }
 
 function toNextTurn () {
@@ -359,6 +398,7 @@ function swapPieces () {
   game.box = arrShuffle(game.box)
   fillDecks()
   toNextTurn()
+  updateScreens()
 }
 
 function resetTurn () {
@@ -387,6 +427,7 @@ function resetTurn () {
   })
   updateDeckdata()
   drawGame()
+  updateScreens()
 }
 
 document.getElementById('main-action-reset').addEventListener('click', resetTurn)
