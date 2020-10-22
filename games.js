@@ -28,7 +28,7 @@ function makeGame () {
 }
 
 function removeGame (game) {
-  games.splice(games.indexOf(game), 1)
+  //games.splice(games.indexOf(game), 1)
 }
 
 function removeNullHostGames () {

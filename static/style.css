@@ -187,9 +187,6 @@ button:disabled, .btn:disabled {
 .remote-piece.selected {
   background: #ccc;
 }
-.remote-piece:hover {
-  background: #e3e3e3;
-}
 
 .game-header-remote {
   height: 64px;
