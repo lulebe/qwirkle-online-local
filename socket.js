@@ -17,7 +17,6 @@ module.exports =  {
         const game = games.getGame(gameName)
         if (game) {
           game.host = client
-          game.hostDisconnected = false
           client.hostsGame = game
           updatePlayers(game)
         }
@@ -84,7 +83,6 @@ module.exports =  {
         }
         if (client.hostsGame) {
           client.hostsGame.host = null
-          client.hostsGame.hostDisconnected = (new Date()).getTime()
           client.hostsGame = null
         }
         if (client.screensGame) {
