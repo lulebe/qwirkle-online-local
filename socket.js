@@ -58,17 +58,21 @@ module.exports =  {
       })
       client.on('game-end', data => {
         const game = games.getGame(data.gameName)
-        client.hostsGame = null
-        game.players.forEach(p => p.client.playsGame = null)
-        games.removeGame(game)
+        if (game) {
+          client.hostsGame = null
+          game.players.forEach(p => { if (p.client) p.client.playsGame = null })
+          games.removeGame(game)
+        }
       })
       client.on('screen-update', data => {
         const game = games.getGame(data.gameName)
-        game.screens.forEach(screen => screen.emit('game-data', data.data))
+        if (game)
+          game.screens.forEach(screen => screen.emit('game-data', data.data))
       })
       client.on('screen-event', data => {
         const game = games.getGame(data.gameName)
-        game.host.emit('screen-event', data)
+        if (game && game.host)
+          game.host.emit('screen-event', data)
       })
       client.on('screen-warning', data => {
         const game = client.hostsGame
