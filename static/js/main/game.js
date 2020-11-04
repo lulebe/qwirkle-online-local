@@ -415,6 +415,7 @@ function swapPieces () {
   toNextTurn()
   updateScoreboard()
   updateScreens()
+  updateDeckdata()
 }
 
 function resetTurn () {
