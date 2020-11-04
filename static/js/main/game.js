@@ -50,7 +50,6 @@ function warnScreens (warningNum) {
 
 let nextRow = 0
 let firstTurn = true
-let gameEnding = false
 let startingPlayer = 0
 let rowsChangedY = [], rowsChangedX = []
 const game = {name: gameName, players: playerNames.map(name => ({name, score: 0, connected: false, deck: []})), box: makeBox(), table: {}, turn: 0}
@@ -101,7 +100,6 @@ function fillDecks () {
 }
 
 function boxEmpty () {
-  gameEnding = true
   displayWarning(WARN_BOX_EMPTY)
 }
 
@@ -350,7 +348,7 @@ function addScores (newPiecePositions) {
 function updateScoreboard () {
   const scoreboard = document.getElementById('scoreboard')
   const turn = game.players[game.turn]
-  scoreboard.innerHTML = [...game.players].sort((a, b) => b.score - a.score).reduce((html, player) => html + `<li class="${player == turn ? "turn" : ""}"><div class="color-marker ${player.connected ? "connected" : "disconnected"}"></div>${player.name}: ${player.score}</li>`, "")
+  scoreboard.innerHTML = [...game.players].sort((a, b) => b.score - a.score).reduce((html, player) => html + `<li class="${player == turn ? "turn" : ""}"><div class="color-marker ${player.connected ? "connected" : "disconnected"}"></div>${player.name}: ${player.score} (${player.deck.length} on hand)</li>`, "")
 }
 
 function displaySelectedPieces () {
@@ -365,7 +363,16 @@ const WARN_NOTHING = 0
 const WARN_BOX_EMPTY = 1
 const WARN_SELECT_1 = 2
 const WARN_INVALID_TURN = 3
-const warnings = ["", "The box is empty. Every player until the starting player has one last turn.", "Please select exactly 1 piece.", "Invalid turn has been reset. Please try again."]
+const WARN_CANT_SWAP = 4
+const WARN_GAME_OVER = 5
+const warnings = [
+  "",
+  "The box is empty. The game will end when someone runs out of pieces.",
+  "Please select exactly 1 piece.",
+  "Invalid turn has been reset. Please try again.",
+  "Can't swap more pieces than currently in box.",
+  "Game is over. Highest score wins!"
+]
 let warningTimeout = null
 function displayWarning (warningNum) {
   warningTimeout && clearTimeout(warningTimeout)
@@ -376,28 +383,37 @@ function displayWarning (warningNum) {
 }
 
 function gameEnd () {
-  const winner = [...game.players].sort((a, b) => a.score - b.score).pop()
-  displayWarning(winner.name + " wins the game!")
+  displayWarning(WARN_GAME_OVER)
   socket.emit('game-end', {gameName})
   updateScreens()
 }
 
 function toNextTurn () {
-  game.turn = game.turn == game.players.length - 1 ? 0 : game.turn + 1
-  if (gameEnding && game.turn == startingPlayer)
+  if (game.players[game.turn].deck.length === 0) {//end game
+    game.players[game.turn].score += 6
+    updateScoreboard()
     gameEnd()
-  document.getElementById('turn-player').innerHTML = game.players[game.turn].name
-  displaySelectedPieces()
+  } else {
+    game.turn = game.turn == game.players.length - 1 ? 0 : game.turn + 1
+    document.getElementById('turn-player').innerHTML = game.players[game.turn].name
+    displaySelectedPieces()
+  }
 }
 
 function swapPieces () {
   resetTurn()
-  const toSwap = game.players[game.turn].deck.filter(piece => piece.selected)
-  game.players[game.turn].deck = game.players[game.turn].deck.filter(piece => !piece.selected)
+  const player = game.players[game.turn]
+  const toSwap = player.deck.filter(piece => piece.selected)
+  player.deck = player.deck.filter(piece => !piece.selected)
+  if (game.box.length < toSwap.length)
+    return displayWarning(WARN_CANT_SWAP)
+  while (player.deck.length < 6 && game.box.length > 0) {
+    player.deck.push({piece: game.box.pop(), selected: false})
+  }
   toSwap.forEach(piece => game.box.push(piece.piece))
   game.box = arrShuffle(game.box)
-  fillDecks()
   toNextTurn()
+  updateScoreboard()
   updateScreens()
 }
 

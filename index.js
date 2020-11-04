@@ -21,4 +21,4 @@ app.use('/screen', require('./routes_screen.js'))
 
 app.use('/static', express.static('./static'))
 
-http.listen(process.env.PORT || 8080)
+http.listen(process.env.PORT || 8080, () => {console.log("running...")})

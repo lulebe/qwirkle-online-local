@@ -83,7 +83,18 @@ const WARN_NOTHING = 0
 const WARN_BOX_EMPTY = 1
 const WARN_SELECT_1 = 2
 const WARN_INVALID_TURN = 3
-const warnings = ["", "The box is empty. Every player until the starting player has one last turn.", "Please select exactly 1 piece.", "Invalid turn has been reset. Please try again."]
+const WARN_CANT_SWAP = 4
+const WARN_GAME_ENDING = 5
+const WARN_GAME_OVER = 6
+const warnings = [
+  "",
+  "The box is empty. Every player until the starting player has one last turn.",
+  "Please select exactly 1 piece.",
+  "Invalid turn has been reset. Please try again.",
+  "Can't swap more pieces than currently in box",
+  "Game will end when someone runs out of pieces",
+  "Game is over. Highest score wins!"
+]
 let warningTimeout = null
 function displayWarning (warningNum) {
   warningTimeout && clearTimeout(warningTimeout)
