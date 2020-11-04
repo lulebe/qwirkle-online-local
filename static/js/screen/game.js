@@ -64,7 +64,7 @@ function makeTurn () {
 function updateScoreboard () {
   const scoreboard = document.getElementById('scoreboard')
   const turn = game.players[game.turn]
-  scoreboard.innerHTML = [...game.players].sort((a, b) => b.score - a.score).reduce((html, player) => html + `<li class="${player == turn ? "turn" : ""}"><div class="color-marker ${player.connected ? "connected" : "disconnected"}"></div>${player.name}: ${player.score}</li>`, "")
+  scoreboard.innerHTML = [...game.players].sort((a, b) => b.score - a.score).reduce((html, player) => html + `<li class="${player == turn ? "turn" : ""}"><div class="color-marker ${player.connected ? "connected" : "disconnected"}"></div>${player.name}: ${player.score} (${player.deck.length} on hand)</li>`, "")
 }
 
 function displaySelectedPieces () {
@@ -84,15 +84,13 @@ const WARN_BOX_EMPTY = 1
 const WARN_SELECT_1 = 2
 const WARN_INVALID_TURN = 3
 const WARN_CANT_SWAP = 4
-const WARN_GAME_ENDING = 5
-const WARN_GAME_OVER = 6
+const WARN_GAME_OVER = 5
 const warnings = [
   "",
-  "The box is empty. Every player until the starting player has one last turn.",
+  "The box is empty. The game will end when someone runs out of pieces.",
   "Please select exactly 1 piece.",
   "Invalid turn has been reset. Please try again.",
-  "Can't swap more pieces than currently in box",
-  "Game will end when someone runs out of pieces",
+  "Can't swap more pieces than currently in box.",
   "Game is over. Highest score wins!"
 ]
 let warningTimeout = null
