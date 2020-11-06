@@ -219,9 +219,14 @@ function makeTurn () {
     displayWarning(WARN_INVALID_TURN)
   } else {
     addScores(newPiecePositions)
-    newPiecePositions.forEach(pos => {game.table[pos.x][pos.y].new = false})
+    removePrevTurnMarks()
+    newPiecePositions.forEach(pos => {
+      game.table[pos.x][pos.y].new = false
+      game.table[pos.x][pos.y].prevTurn = true
+    })
     rowsChangedX = []
     rowsChangedY = []
+    drawGame()
     fillDecks()
     toNextTurn()
     updateScoreboard()
@@ -412,10 +417,24 @@ function swapPieces () {
   }
   toSwap.forEach(piece => game.box.push(piece.piece))
   game.box = arrShuffle(game.box)
+  removePrevTurnMarks()
   toNextTurn()
   updateScoreboard()
   updateScreens()
   updateDeckdata()
+}
+
+function removePrevTurnMarks () {
+  Object.keys(game.table).forEach(sx => {
+    const x = parseInt(sx)
+    Object.keys(game.table[x]).forEach(sy => {
+      const y = parseInt(sy)
+      const piece = game.table[x][y]
+      if (piece.prevTurn) {
+        delete piece.prevTurn
+      }
+    })
+  })
 }
 
 function resetTurn () {

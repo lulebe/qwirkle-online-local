@@ -38,8 +38,8 @@ function drawGame () {
   Object.keys(game.table).forEach(x => {
     Object.keys(game.table[x]).forEach(y => {
       const piece = game.table[x][y].piece
-      drawPiece(ctx, x, y, piece)
-      
+      const prevTurn = game.table[x][y].prevTurn
+      drawPiece(ctx, x, y, piece, prevTurn)
     })
   })
 
@@ -62,8 +62,8 @@ function drawGrid () {
   ctx.stroke()
 }
 
-function drawPiece (ctx, x, y, piece) {
-  ctx.fillStyle = "#000000"
+function drawPiece (ctx, x, y, piece, prevTurn) {
+  ctx.fillStyle = prevTurn ? "#555555" : "#000000"
   ctx.fillRect(x*tileSize+1, y*tileSize+1, tileSize-1, tileSize-1)
   ctx.fillStyle = ["#ff3333", "#33ff33", "#ffdd00", "#3333ff", "#ff3dc8", "#dcc2d8"][parseInt(piece.substring(0,1))]
   switch (parseInt(piece.substring(1,2))) {
