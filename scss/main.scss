@@ -39,3 +39,10 @@ body {
 fieldset {
   border: 1px solid rgba(0,0,0,0.3);
 }
+
+a {
+  color: $primary-color;
+  &:visited {
+    color: $primary-color;
+  }
+}

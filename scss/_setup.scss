@@ -34,3 +34,10 @@
     }
   }
 }
+
+#loadgame-info {
+  display: none;
+  &.visible {
+    display: block;
+  }
+}

@@ -5,13 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "css": "brunch build"
+    "css": "brunch build",
+    "start": "node .",
+    "watch": "nodemon -e js,twig,json"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "brunch": "^3.0.0",
+    "nodemon": "^2.0.6",
     "sass-brunch": "^3.0.0"
   },
   "dependencies": {

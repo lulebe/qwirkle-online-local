@@ -71,6 +71,13 @@ button:disabled, .btn:disabled {
   background: red;
 }
 
+#loadgame-info {
+  display: none;
+}
+#loadgame-info.visible {
+  display: block;
+}
+
 .game-layout {
   position: absolute;
   width: 100%;
@@ -176,6 +183,44 @@ button:disabled, .btn:disabled {
   opacity: 1;
 }
 
+#loadgame-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.2);
+}
+#loadgame-popup.visible {
+  display: block;
+}
+#loadgame-popup #loadgame-modal {
+  z-index: 10000;
+  position: fixed;
+  background: white;
+  top: 50%;
+  left: 50%;
+  margin-left: -250px;
+  width: 500px;
+  padding: 16px;
+  height: 200px;
+  margin-top: -100px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+#loadgame-popup #loadgame-modal .buttons {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  left: 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
 .remote-piece {
   margin: 12px 0;
   height: 64px;
@@ -233,6 +278,13 @@ body {
 
 fieldset {
   border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+a {
+  color: #6622cc;
+}
+a:visited {
+  color: #6622cc;
 }
 
 

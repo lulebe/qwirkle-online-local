@@ -16,3 +16,8 @@ function updatePlayers (playerList) {
   document.getElementById("connected-players").innerHTML = playerList.length
   document.getElementById("start-button").disabled = false //playerList.length < 2
 }
+
+if (window.localStorage.length > 0) { //has saved game
+  document.getElementById("loadgame-info").classList.add('visible')
+  document.getElementById("loadgame-playernames").innerHTML = JSON.parse(window.localStorage.getItem('game')).players.map(p => '"' + p.name + '"').join(', ')
+}

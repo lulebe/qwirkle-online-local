@@ -53,11 +53,52 @@ let firstTurn = true
 let startingPlayer = 0
 let rowsChangedY = [], rowsChangedX = []
 const game = {name: gameName, players: playerNames.map(name => ({name, score: 0, connected: false, deck: []})), box: makeBox(), table: {}, turn: 0}
-fillDecks()
-setStartingPlayer()
-updateScoreboard()
-initCanvas()
-updateScreens()
+
+if (canLoadGame()) //has saved game
+  displayLoadGamePopup()
+else
+  initGame()
+
+function initGame () {
+  fillDecks()
+  setStartingPlayer()
+  updateScoreboard()
+  initCanvas()
+  updateScreens()
+}
+
+function canLoadGame () {
+  if (!window.localStorage.getItem('nextRow') || !window.localStorage.getItem('game')) return false
+  const savedPlayerNames = JSON.parse(window.localStorage.getItem('game')).players.map(p => p.name)
+  return game.players.length === savedPlayerNames.length && game.players.every(p => savedPlayerNames.includes(p.name))
+}
+
+function displayLoadGamePopup () {
+  document.getElementById('loadgame-popup').classList.add('visible')
+}
+
+function loadGame () {
+  document.getElementById('loadgame-popup').classList.remove('visible')
+  nextRow = window.localStorage.getItem('nextRow')
+  const loadedGame = JSON.parse(window.localStorage.getItem('game'))
+  game.players = loadedGame.players
+  game.box = loadedGame.box
+  game.table = loadedGame.table
+  game.turn = loadedGame.turn
+  updateScreens()
+  document.getElementById('turn-player').innerHTML = game.players[game.turn].name
+  updateScoreboard()
+  initCanvas()
+  updateScreens()
+  displayBoxSize()
+  updateDeckdata()
+}
+
+function startNewGame () {
+  document.getElementById('loadgame-popup').classList.remove('visible')
+  window.localStorage.clear()
+  initGame()
+}
 
 //"colorShape" = "XX"
 //colors: 0=red, 1=green, 2=yellow, 3=blue, 4=pink, 5=rose
@@ -391,6 +432,7 @@ function gameEnd () {
   displayWarning(WARN_GAME_OVER)
   socket.emit('game-end', {gameName})
   updateScreens()
+  clearSavedGame()
 }
 
 function toNextTurn () {
@@ -402,6 +444,7 @@ function toNextTurn () {
     game.turn = game.turn == game.players.length - 1 ? 0 : game.turn + 1
     document.getElementById('turn-player').innerHTML = game.players[game.turn].name
     displaySelectedPieces()
+    saveGame()
   }
 }
 
@@ -466,6 +509,16 @@ function resetTurn () {
   updateScreens()
 }
 
+function saveGame () {
+  window.localStorage.setItem('nextRow', nextRow)
+  window.localStorage.setItem('game', JSON.stringify(game))
+}
+function clearSavedGame () {
+  window.localStorage.clear()
+}
+
 document.getElementById('main-action-reset').addEventListener('click', resetTurn)
 document.getElementById('main-action-swap').addEventListener('click', swapPieces)
 document.getElementById('main-action-finish').addEventListener('click', makeTurn)
+document.getElementById('loadgame-load').addEventListener('click', loadGame)
+document.getElementById('loadgame-new').addEventListener('click', startNewGame)
