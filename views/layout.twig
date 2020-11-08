@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Qwirkle - {% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="/static/style.css">
+    <style>
+    {% block styles %}{% endblock %}
+    </style>
   </head>
   <body>
     {% block main %}{% endblock %}

@@ -2,6 +2,17 @@
 
 {% block title %}Start{% endblock %}
 
+{% block styles %}
+body {
+  background-position: center;
+  background-image: url("/static/imgs/splash_filtered.png");
+}
+.centered {
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 50px rgba(0,0,0,0.3);
+}
+{% endblock %}
+
 {% block main %}
 <div class="centered">
   <h1 class="center">Qwirkle</h1>
