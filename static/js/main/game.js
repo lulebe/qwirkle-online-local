@@ -79,7 +79,7 @@ function displayLoadGamePopup () {
 
 function loadGame () {
   document.getElementById('loadgame-popup').classList.remove('visible')
-  nextRow = window.localStorage.getItem('nextRow')
+  nextRow = parseInt(window.localStorage.getItem('nextRow'))
   const loadedGame = JSON.parse(window.localStorage.getItem('game'))
   game.players = loadedGame.players
   game.box = loadedGame.box
