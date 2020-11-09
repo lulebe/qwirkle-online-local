@@ -430,8 +430,8 @@ function displayWarning (warningNum) {
 
 function gameEnd () {
   displayWarning(WARN_GAME_OVER)
-  socket.emit('game-end', {gameName})
   updateScreens()
+  socket.emit('game-end', {gameName})
   clearSavedGame()
 }
 
