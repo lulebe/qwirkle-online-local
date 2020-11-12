@@ -37,7 +37,7 @@ function removeGame (game) {
 
 function removeInactiveGames () {
   games.forEach(game => {
-    if (game.lastActive && game.lastActive < ((new Date()).getTime() - 1800000))
+    if (game.lastActive && game.lastActive < ((new Date()).getTime() - 7200000))
       removeGame(game)
   })
 }
