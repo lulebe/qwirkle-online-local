@@ -17,7 +17,7 @@ body {
 <div class="centered">
   <h1 class="center">Qwirkle</h1>
   <p>
-    Qwirkle has a table and a hand for each player. The hand is accessed via a "remote", either your phone, or just a second tab.
+    Qwirkle has a shared table and a hand for each player. The hand is accessed via a "remote", either your phone, or just a second tab.
     Others should not see it. When playing remotely, players can additionally "join as main screen" on their PC/tablet to see the table.
     <br>
     <a href="https://www.ultraboardgames.com/qwirkle/game-rules.php">How to play</a>
@@ -30,7 +30,7 @@ body {
     <legend>Create game</legend>
     <form method="POST" action="/main/create_game">
       <p class="center">
-        Create a new game on this device and use other devices to join in: <br><br>
+        Create a new game on this device (ideally a PC/tablet) and use other devices to join in: <br><br>
         <button type="submit" class="big primary center">Create a new game!</button>
       </p>
     </form>
@@ -39,7 +39,7 @@ body {
     <legend>Join game as remote</legend>
     <form method="POST" action="/remote/game">
       <p class="center">
-        Join a game on this device: <br><br>
+        Join a game on this device (best on phone): <br><br>
 
         <label>Game Name: <br>
           <input type="text" name="game" />
@@ -57,7 +57,7 @@ body {
     <legend>Join game as main screen</legend>
     <form method="POST" action="/screen/game">
       <p class="center">
-        Join a game on this device: <br><br>
+        Join a game on this device (ideally a PC/tablet):<br><br>
 
         <label>Game Name: <br>
           <input type="text" name="game" />
