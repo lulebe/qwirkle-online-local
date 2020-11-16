@@ -81,7 +81,9 @@ module.exports =  {
       })
       client.on('disconnect', () => {
         if (client.playsGame) {
-          client.playsGame.players.find(player => player.client == client).client = null
+          const player = client.playsGame.players.find(player => player.client == client)
+          if (player)
+            player.client = null
           updatePlayers(client.playsGame)
           client.playsGame = null
         }
