@@ -32,6 +32,7 @@ function makeGame () {
 }
 
 function removeGame (game) {
+  console.trace(game.name)
   games.splice(games.indexOf(game), 1)
 }
 
