@@ -20,8 +20,8 @@ let scale = 1.0
 window.addEventListener('resize', resizeCanvas)
 
 function resizeCanvas (isInit) {
-  document.getElementById("game-canvas").width = document.getElementById("game-table").clientWidth -10
-  document.getElementById("game-canvas").height = document.getElementById("game-table").clientHeight -10
+  document.getElementById("game-canvas").width = document.body.clientWidth - Math.min(document.body.clientWidth*0.35, 450) - 4 - 2
+  document.getElementById("game-canvas").height = window.innerHeight - 64 - 4
   if (!isInit)
     drawGame()
 }

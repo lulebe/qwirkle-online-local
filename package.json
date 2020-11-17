@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "css": "brunch build",
     "start": "node .",
-    "watch": "nodemon -e js,twig,json"
+    "watch": "nodemon -e js,twig,json",
+    "watch-css": "brunch watch"
   },
   "keywords": [],
   "author": "",
