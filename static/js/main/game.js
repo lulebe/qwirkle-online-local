@@ -5,7 +5,7 @@ socket.on('connect', () => {
 socket.on('selection-change', data => {
   const player = game.players.find(player => player.name == data.player)
   if (player)
-    player.deck = data.deck
+    player.deck.forEach((piece, i) => piece.selected = data.deck[i].selected)
   displaySelectedPieces()
 })
 socket.on('players', function(data) {
