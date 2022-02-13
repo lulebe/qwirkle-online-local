@@ -292,9 +292,9 @@ function piecesShareRow (newPiecePositions) {
   })
   if (firstTurn && (rowXShared.length === 1 || rowYShared.length === 1))
     return true
-  if (rowXShared.length === 1 && rowXMembersNew.some(v => v == false))
+  if (rowXShared.length === 1)
     return true
-  if (rowYShared.length === 1 && rowYMembersNew.some(v => v == false))
+  if (rowYShared.length === 1)
     return true
   return false
 }
