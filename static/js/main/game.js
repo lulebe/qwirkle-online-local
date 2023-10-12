@@ -290,8 +290,6 @@ function piecesShareRow (newPiecePositions) {
       if (game.table[x][y].rowY == rowYShared[0]) rowYMembersNew.push(game.table[x][y].new)
     })
   })
-  if (firstTurn && (rowXShared.length === 1 || rowYShared.length === 1))
-    return true
   if (rowXShared.length === 1)
     return true
   if (rowYShared.length === 1)
@@ -302,6 +300,21 @@ function piecesShareRow (newPiecePositions) {
 function checkPieceAllowed (x, y) {
   //for all 4 neighboring rows:
   //if row exists & (is other color & same logo) | (is same color & other logo)
+
+  //0. disallow free pieces after game has started
+  if (!firstTurn) {
+    let pieceAbove = null, pieceBelow = null, pieceRight = null, pieceLeft = null
+    if (game.table[x-1] != null && game.table[x-1][y] != null)
+      pieceLeft = game.table[x-1][y]
+    if (game.table[x+1] != null && game.table[x+1][y] != null)
+      pieceRight = game.table[x+1][y]
+    if (game.table[x] != null && game.table[x][y-1] != null)
+    pieceAbove = game.table[x][y-1]
+    if (game.table[x] != null && game.table[x][y+1] != null)
+    pieceBelow = game.table[x][y+1]
+    if (![pieceAbove, pieceBelow, pieceRight, pieceLeft].some(p => p != null && !p.new))
+      return false
+  }
 
   //1. is only part of 1 row per axis
   //or try to join rows if possible
@@ -314,6 +327,7 @@ function checkPieceAllowed (x, y) {
     return false
   if (game.table[x] != null && game.table[x][y+1] != null && game.table[x][y+1].rowY !== piece.rowY)
     return false
+ 
   
   //2. get pieces for rows
   let rowXPieces = []
