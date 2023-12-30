@@ -30,6 +30,7 @@ function initCanvas () {
 }
 
 function drawGame () {
+  if (!game) return
   ctx.clearRect(0, 0, canvas.width, canvas.height)
   ctx.translate(translateX, translateY)
   ctx.scale(scale, scale)
@@ -41,7 +42,6 @@ function drawGame () {
       const piece = game.table[x][y].piece
       const prevTurn = game.table[x][y].prevTurn
       drawPiece(ctx, x, y, piece, prevTurn)
-      
     })
   })
 
