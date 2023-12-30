@@ -312,7 +312,7 @@ function checkPieceAllowed (x, y) {
     pieceAbove = game.table[x][y-1]
     if (game.table[x] != null && game.table[x][y+1] != null)
     pieceBelow = game.table[x][y+1]
-    if (![pieceAbove, pieceBelow, pieceRight, pieceLeft].some(p => p != null && !p.new))
+    if (![pieceAbove, pieceBelow, pieceRight, pieceLeft].some(p => p != null))
       return false
   }
 
