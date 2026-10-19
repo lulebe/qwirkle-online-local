@@ -1,4 +1,7 @@
-const {TwingEnvironment, TwingLoaderFilesystem} = require('twing')
+const fs = require('node:fs')
+const path = require('node:path')
+const { createEnvironment, createFilesystemLoader } = require('twing')
 
-const loader = new TwingLoaderFilesystem('./views')
-module.exports = new TwingEnvironment(loader)
+const loader = createFilesystemLoader(fs)
+loader.addPath(path.join(__dirname, 'views'))
+module.exports = createEnvironment(loader)
