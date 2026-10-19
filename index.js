@@ -12,7 +12,7 @@ app.use(bodyparser.urlencoded({extended: false}))
 
 
 app.get('/', (req, res) => {
-  twing.render('index.twig').then(rendered => res.end(rendered))
+  twing.render('index.twig', {}).then(rendered => res.end(rendered))
 })
 
 app.use('/remote', require('./routes_remote.js'))
